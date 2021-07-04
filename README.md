@@ -7,9 +7,11 @@
 
 ## Setup a (headless) Raspi
 
-- flash Raspian (with or without gui)
-- place file called `ssh` under `/boo/` to enable SSH access on first boot
-
+- flash Raspian (with or without gui) to an SD card
+- place file called `ssh` under `/boot/` to enable SSH access on first boot
+- insert the SD card into the raspi
+- connect raspi to your local network (LAN)
+- power it on
 
 ## Prepare RTL receiver
 
@@ -103,22 +105,24 @@ real sample rate: 2048047 current PPM: 23 cumulative PPM: 23
 real sample rate: 2048200 current PPM: 98 cumulative PPM: 62
 real sample rate: 2047865 current PPM: -66 cumulative PPM: 18
 real sample rate: 2048203 current PPM: 100 cumulative PPM: 39
-real sample rate: 2047866 current PPM: -65 cumulative PPM: 18
-real sample rate: 2048043 current PPM: 21 cumulative PPM: 18
-real sample rate: 2048184 current PPM: 90 cumulative PPM: 29
-real sample rate: 2047890 current PPM: -53 cumulative PPM: 18
-real sample rate: 2048206 current PPM: 101 cumulative PPM: 28
-real sample rate: 2047863 current PPM: -67 cumulative PPM: 18
-real sample rate: 2048163 current PPM: 80 cumulative PPM: 24
-real sample rate: 2047916 current PPM: -41 cumulative PPM: 18
+real sample rate: 2048173 current PPM: 85 cumulative PPM: 14
+real sample rate: 2047910 current PPM: -44 cumulative PPM: 13
+real sample rate: 2048030 current PPM: 15 cumulative PPM: 13
+real sample rate: 2048038 current PPM: 19 cumulative PPM: 14
+real sample rate: 2048045 current PPM: 22 cumulative PPM: 14
+real sample rate: 2048031 current PPM: 16 cumulative PPM: 14
+real sample rate: 2048039 current PPM: 19 cumulative PPM: 14
+real sample rate: 2048036 current PPM: 18 cumulative PPM: 14
 ...
 ```
 
-The number that occurs most often is your PPM.
+Give it some time to settle on a cumulative PPM. After a minute or so, you can stop the program with CTRL + C.
+In the above case, I would choose 14 as cummulative error.
+
 
 Scanning for GSM-900 base stations:
 
-`kal -s 900 -g 49.6 -e 23`
+`kal -s 900 -g 49.6 -e 14`
 
 will yield
 
@@ -139,12 +143,11 @@ GSM-900:
     chan:   47 (944.4MHz - 29.435kHz)    power:   45369.09
 ```
 
-The higher the output power, the better the signal is. In my case there aren't many base station. Of the few
-channel 45 has the best signal.
+The higher the output power, the better the signal is. In my case there aren't many base stations.
 
-Find your PPM with channel 45 and error rate 18
+Kalibrate on channel 45 and error rate 14.
 
-`kal -c 45 -g 49.6 -e 18`
+`kal -c 45 -g 49.6 -e 14`
 
 will yield
 
@@ -190,3 +193,4 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", GROUP="adm"
 - https://cromwell-intl.com/open-source/raspberry-pi/sdr-getting-started.html
 - https://www.raspberry-pi-geek.de/ausgaben/rpg/2014/06/luftraum-ueberwachen-mit-dem-raspberry-pi/
 - https://github.com/dgiardini/rtl-ais
+- https://www.ronan.bzh/p/ais-receiver-on-a-raspberry-pi-with-rtl-sdr/
