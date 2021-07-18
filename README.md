@@ -16,7 +16,7 @@
 ## Prepare RTL receiver
 
 - Connect to Pi: `ssh pi@192.168.0.42` (default password is `raspberry`)
-- Install required Software: `sudo apt-get -fym install git cmake libusb-1.0-0-dev build-essential`
+- Install required Software: `sudo apt-get -fym install git cmake libusb-1.0-0-dev build-essential libglib2.0-dev`
 - Plugin the RTL receiver and make sure, that is detected:
 ```bash
 $ lsusb
